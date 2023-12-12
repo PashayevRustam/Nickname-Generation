@@ -49,18 +49,57 @@ public class Main {
 
     private static void countBeautifulWords(int length, String[] texts) {
         for (String text : texts) {
-            if (isBeautifulWord(text, length)) {
+            //if (isBeautifulWord(text, length)) {
+            if (text.length() == length) {
                 switch (length) {
                     case 3:
-                        countLength3.incrementAndGet();
+                        // Проверка на палиндром
+                        boolean isPalindrome3 = true;
+                        for (int i = 0; i <= length / 2; i++) {
+                            if (text.charAt(i) != text.charAt(length - i - 1)) {
+                                isPalindrome3 = false;
+                                break;
+                            }
+                        }
+                        if (isPalindrome3) {
+                            countLength3.incrementAndGet();
+                        }
                         break;
                     case 4:
-                        countLength4.incrementAndGet();
+                        // Проверка на одинаковые буквы
+                        boolean isSameChar4 = true;
+                        char firstChar = text.charAt(0);
+                        for (int i = 1; i < length; i++) {
+                            if (text.charAt(i) != firstChar) {
+                                isSameChar4 = false;
+                                break;
+                            }
+                        }
+                        if (isSameChar4) {
+                            countLength4.incrementAndGet();
+                        }
                         break;
                     case 5:
-                        countLength5.incrementAndGet();
+                        // Проверка на возрастающий порядок букв
+                        boolean isIncreasingOrder5 = true;
+                        for (char c = 'a'; c <= 'z'; c++) {
+                            int count = 0;
+                            for (int i = 0; i < length; i++) {
+                                if (text.charAt(i) == c) {
+                                    count++;
+                                }
+                            }
+                            if (count > 0 && text.indexOf(c) != -1 && text.indexOf(c) + count != text.lastIndexOf(c)) {
+                                isIncreasingOrder5 = false;
+                                break;
+                            }
+                        }
+                        if (isIncreasingOrder5) {
+                            countLength5.incrementAndGet();
+                        }
                         break;
                 }
+                //}
             }
         }
     }
@@ -73,6 +112,14 @@ public class Main {
         // Проверка на палиндром
         for (int i = 0; i < length / 2; i++) {
             if (text.charAt(i) != text.charAt(length - i - 1)) {
+                return false;
+            }
+        }
+
+        // Проверка на одинаковые буквы
+        char firstChar = text.charAt(0);
+        for (int i = 1; i < length; i++) {
+            if (text.charAt(i) != firstChar) {
                 return false;
             }
         }
