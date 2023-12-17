@@ -48,8 +48,21 @@ public class Main {
     }
 
     private static void countBeautifulWords(int length, String[] texts) {
+        AtomicInteger counter = null;
+
+        switch (length) {
+            case 3:
+                counter = countLength3;
+                break;
+            case 4:
+                counter = countLength4;
+                break;
+            case 5:
+                counter = countLength5;
+                break;
+        }
+
         for (String text : texts) {
-            //if (isBeautifulWord(text, length)) {
             if (text.length() == length) {
                 switch (length) {
                     case 3:
@@ -62,7 +75,7 @@ public class Main {
                             }
                         }
                         if (isPalindrome3) {
-                            countLength3.incrementAndGet();
+                            counter.incrementAndGet();
                         }
                         break;
                     case 4:
@@ -76,7 +89,7 @@ public class Main {
                             }
                         }
                         if (isSameChar4) {
-                            countLength4.incrementAndGet();
+                            counter.incrementAndGet();
                         }
                         break;
                     case 5:
@@ -95,14 +108,14 @@ public class Main {
                             }
                         }
                         if (isIncreasingOrder5) {
-                            countLength5.incrementAndGet();
+                            counter.incrementAndGet();
                         }
                         break;
                 }
-                //}
             }
         }
     }
+
 
     private static boolean isBeautifulWord(String text, int length) {
         if (text.length() != length) {
@@ -112,14 +125,6 @@ public class Main {
         // Проверка на палиндром
         for (int i = 0; i < length / 2; i++) {
             if (text.charAt(i) != text.charAt(length - i - 1)) {
-                return false;
-            }
-        }
-
-        // Проверка на одинаковые буквы
-        char firstChar = text.charAt(0);
-        for (int i = 1; i < length; i++) {
-            if (text.charAt(i) != firstChar) {
                 return false;
             }
         }
